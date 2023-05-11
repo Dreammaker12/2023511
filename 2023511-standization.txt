@@ -1,0 +1,79 @@
+scores = [[10, 20, 30], [20, 40, 60],[30,50,70], [40, 60, 80]]
+
+n_student = len(scores)
+n_class = len(scores[0])
+class_score_sums = list()
+
+class_score_square_sums = list()
+class_score_means = list()
+class_score_variances = list()
+class_score_stds = list()
+
+for _ in range(n_class):
+    class_score_sums.append(0)
+    class_score_square_sums.append(0)
+
+for class_idx in range(n_class):
+    class_score_means.append(class_score_sums[class_idx]/n_student)
+
+for student_scores in scores:
+    for class_idx in range(n_class):
+        class_score_sums[class_idx] += student_scores[class_idx]
+        class_score_square_sums[class_idx] += student_scores[class_idx]**2
+
+for class_idx in range(n_class):
+    mos = class_score_square_sums[class_idx]/n_student
+    som = class_score_means[class_idx]**2
+    
+    variance = mos-som
+    std = variance**0.5
+    
+    class_score_variances.append(variance)
+    class_score_stds.append(std)
+print("before standardization")
+print("mean", class_score_means)
+print("variance: ", class_score_variances)
+print("standard deviations: ", class_score_stds,"\n")
+
+for student_idx in range(n_student):
+    for class_idx in range(n_class):
+        
+        score = scores[student_idx][class_idx]
+        mean = class_score_means[class_idx]
+        std = class_score_stds[class_idx]
+        
+        scores[student_idx][class_idx] = (score-mean)/std
+n_student = len(scores)
+n_class = len(scores[0])
+class_score_sums = list()
+
+class_score_square_sums = list()
+class_score_means = list()
+class_score_variances = list()
+class_score_stds = list()
+
+for _ in range(n_class):
+    class_score_sums.append(0)
+    class_score_square_sums.append(0)
+
+for class_idx in range(n_class):
+    class_score_means.append(class_score_sums[class_idx]/n_student)
+
+for student_scores in scores:
+    for class_idx in range(n_class):
+        class_score_sums[class_idx] += student_scores[class_idx]
+        class_score_square_sums[class_idx] += student_scores[class_idx]**2
+
+for class_idx in range(n_class):
+    mos = class_score_square_sums[class_idx]/n_student
+    som = class_score_means[class_idx]**2
+    
+    variance = mos-som
+    std = variance**0.5
+    
+    class_score_variances.append(variance)
+    class_score_stds.append(std)
+print("after standardization")
+print("mean", class_score_means)
+print("variance: ", class_score_variances)
+print("standard deviations: ", class_score_stds) 
